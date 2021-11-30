@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Carlist</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<h1>Add car</h1>
+	<div>
+		<form th:object="${car}" th:action="@{save}" action="#" method="post">
+			<label for="licenseplate">Licenseplate
+			<input type="text" id="licenseplate" th:field="*{licenseplate}" />
+			</label>
+			<div style="clear: both; display: block; height: 10px;"></div>
+			<label for="modlist">Model
+			<select id="modlist" th:field="*{model}" class="form-control">
+			<option th:each="model: ${models}" th:value="${model.modelid}" th:text="${model.name}"></option>
+			</select>
+			</label>
+			<div style="clear: both; display: block; height: 10px;"></div>
+			<label for="modelnumber">Modelnumber
+			<input type="text" id="modelnumber" th:field="*{modelnumber}" />
+			</label>
+			<div style="clear: both; display: block; height: 10px;"></div>
+			<label for="year">Year
+			<input type="text" id="year" th:field="*{year}" />
+			</label>
+			<div style="clear: both; display: block; height: 10px;"></div>
+			<label for="city">City
+			<input type="text" id="city" th:field="*{city}" />
+			</label>
+			<div style="clear: both; display: block; height: 10px;"></div>
+			<label for="usdperhour">Hourly rate
+			<input type="text" id="usdperhour" th:field="*{usdperhour}" />
+			</label>
+			<p th:if="${#fields.hasErrors('usdperhour')}" th:errors="*{usdperhour}"> Hourly rate error</p>
+			<div style="clear: both; display: block; height: 10px;"></div>
+			<label for="available">Available
+			<input type="checkbox" id="available" name="available" th:field="*{available}"/>
+			</label>
+			<div style="clear: both; display: block; height: 10px;"></div>
+
+			<!--
+			<div style="clear: both; display: block; height: 10px;"></div>
+			<label for="townlist">Town</label>
+			<select id="townlist" th:field="*{town}" class="form-control">
+				<option th:each="town: ${towns}" th:value="${town.townid}" th:text="${town.name}"></option>
+			</select> -->
+			
+			<div style="clear: both; display: block; height: 10px;"></div>
+			<input type="submit" value="Save"></input>
+		</form>
+	</div>
+</body>
+</html>

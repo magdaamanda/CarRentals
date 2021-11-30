@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <title>Carlist</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<h1>Cars</h1>
+    <table>
+		<tr>
+		    <th>Licenseplate</th>
+		    <th>Model</th>
+		    <th>Modelnumber</th>
+		    <th>Year</th>
+		    <th>City</th>
+		    <th>Hourly rate</th>
+		    <th sec:authorize="hasAuthority('ADMIN')">Available</th>
+			<!--<th>Town</th> -->
+		</tr>  
+		<!-- GUEST RIGHTS VIEW -->
+			<tr sec:authorize="hasAuthority('GUEST')" th:each = "car : ${cars}" th:if="${car.available == true}">
+    		<td th:text="${car.licenseplate}"></td>
+    		<td th:text="${car.model.name}"></td>
+    		<td th:text="${car.modelnumber}"></td>
+    		<td th:text="${car.year}"></td>
+    		<td th:text="${car.city}"></td>
+    		<td th:text="${car.usdperhour}"></td>
+    	<!--<td th:text="${car.town.name}"></td> -->
+    		
+    		</tr>
+		<!-- USER RIGHTS VIEW -->
+		<tr sec:authorize="hasAuthority('USER')" th:each = "car : ${cars}" th:if="${car.available == true}">
+    		<td th:text="${car.licenseplate}"></td>
+    		<td th:text="${car.model.name}"></td>
+    		<td th:text="${car.modelnumber}"></td>
+    		<td th:text="${car.year}"></td>
+    		<td th:text="${car.city}"></td>
+    		<td th:text="${car.usdperhour}"></td>
+    	<!--<td th:text="${car.town.name}"></td> -->
+    		
+    		<td><a th:href="@{edit/{id}(id=${car.id})}">Edit</a>
+    	</td></tr>
+    	
+		<!-- ADMIN RIGHTS VIEW -->
+    	<tr sec:authorize="hasAuthority('ADMIN')" th:each = "car : ${cars}">
+    		<td th:text="${car.licenseplate}"></td>
+    		<td th:text="${car.model.name}"></td>
+    		<td th:text="${car.modelnumber}"></td>
+    		<td th:text="${car.year}"></td>
+    		<td th:text="${car.city}"></td>
+    		<td th:text="${car.usdperhour}"></td>
+    		<td th:text="${car.available}"></td>
+    	<!--<td th:text="${car.town.name}"></td> -->
+    		
+    			<td>
+    			<a th:href="@{edit/{id}(id=${car.id})}">Edit</a>
+    			<a th:href="@{/delete/{id}(id=${car.id})}" class="btn btn-xs btn-danger">Delete</a>
+    			</td>
+    	</tr>
+     </table>
+	 <a sec:authorize="hasAuthority('ADMIN')" href="/add">Add Car</a> 
+	 <div class="col-md-4" style="padding:20px 0">
+		<form th:action="@{/logout}" method="post">
+			<input type="submit" value="Sign Out" class="btn btn-sm btn-danger"/>
+		</form>
+	</div>   	
+</body>
+</html>
